@@ -1,12 +1,20 @@
-micronaut:
-  application:
-    name: keymanagerGrpc
 datasources:
   default:
-    url: jdbc:mysql://localhost:3306/db
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: root
-    password: ''
-    schema-generate: CREATE_DROP
-    dialect: MYSQL
-jpa.default.properties.hibernate.hbm2ddl.auto: update
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/z_pix_keymanager_grpc?createDatabaseIfNotExist=true&serverTimezone=UTC
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:my$ql}
+    schema-generate: UPDATE
+    dialect: "org.hibernate.dialect.MySQL5InnoDBDialect"
+jpa:
+  default:
+    properties:
+      hibernate.hbm2ddl.auto: update
+      hibernate.show_sql: true
+      hibernate.format_sql: true
+
+
+#habilita log no contexto transacional
+logger:
+  levels:
+    io.micronaut.transaction: DEBUG
