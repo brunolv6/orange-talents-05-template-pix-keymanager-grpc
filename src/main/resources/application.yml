@@ -13,7 +13,6 @@ jpa:
       hibernate.show_sql: true
       hibernate.format_sql: true
 
-
 #habilita log no contexto transacional
 logger:
   levels:

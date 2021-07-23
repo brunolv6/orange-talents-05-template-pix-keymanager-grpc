@@ -40,9 +40,18 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     implementation("io.micronaut:micronaut-validation")
 
+    // consumir xml
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.micronaut.xml:micronaut-jackson-xml")
 
-    testImplementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-http-client")
+
+    // hibernate valdation
+    implementation("org.hibernate:hibernate-validator:6.1.6.Final")
+
+    // teste
+//    testImplementation("com.h2database:h2")
+//    testImplementation("org.mockito:mockito-core:3.8.0")
 
 }
 

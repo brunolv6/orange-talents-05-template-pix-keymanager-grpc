@@ -5,16 +5,40 @@ option java_package = "br.com.zupacademy.bruno";
 option java_outer_classname = "KeymanagerGrpc";
 option objc_class_prefix = "HLW";
 
+import "google/protobuf/any.proto";
+
 package br.com.zupacademy.bruno;
 
-service KeymanagerGrpcService {
-  rpc send (KeymanagerGrpcRequest) returns (KeymanagerGrpcReply) {}
+service ChavePixService {
+  rpc cadastrar (ChavePixServiceRequest) returns (ChavePixServiceResponse) {}
 }
 
-message KeymanagerGrpcRequest {
-  string name = 1;
+enum TipoChave {
+  ALEATORIO = 0;
+  CPF = 1;
+  CELULAR = 2;
+  EMAIL = 3;
 }
 
-message KeymanagerGrpcReply {
-  string message = 1;
+enum TipoConta {
+  INCOMPLETA = 0;
+  CONTA_CORRENTE = 1;
+  CONTA_POUPANCA = 2;
+}
+
+message ErrorDetails {
+  int32 code = 1;
+  string campo = 2;
+  string message = 3;
+}
+
+message ChavePixServiceRequest {
+  string idCliente = 1;
+  TipoChave tipoChave = 2;
+  string chave = 3;
+  TipoConta tipoConta = 4;
+}
+
+message ChavePixServiceResponse {
+  string pixId = 1;
 }
