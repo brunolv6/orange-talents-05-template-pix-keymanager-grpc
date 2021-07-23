@@ -1,4 +1,4 @@
-package br.com.zupacademy.bruno.compartilhados.clientesExternos.erpItau
+package br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb.errorHandler
 
 import io.micronaut.aop.Around
 
@@ -6,4 +6,4 @@ import io.micronaut.aop.Around
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FIELD, AnnotationTarget.TYPE)
 @Around
-annotation class ErrorHandlerErpItauClient
+annotation class ErrorHandlerBcbClient

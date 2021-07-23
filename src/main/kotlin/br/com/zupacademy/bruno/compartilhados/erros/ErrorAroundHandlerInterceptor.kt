@@ -1,6 +1,10 @@
 package br.com.zupacademy.bruno.compartilhados.erros
 
 import br.com.zupacademy.bruno.ErrorDetails
+import br.com.zupacademy.bruno.compartilhados.erros.exceptions.AlreadyExistsErrorException
+import br.com.zupacademy.bruno.compartilhados.erros.exceptions.BadRequestErrorException
+import br.com.zupacademy.bruno.compartilhados.erros.exceptions.ConstraintViolationExceptionSpecial
+import br.com.zupacademy.bruno.compartilhados.erros.exceptions.InconsistenciaTipoChaveEChaveException
 import com.google.protobuf.Any.*
 import com.google.rpc.Code
 import io.grpc.protobuf.StatusProto
@@ -8,7 +12,6 @@ import io.grpc.stub.StreamObserver
 import io.micronaut.aop.InterceptorBean
 import io.micronaut.aop.MethodInterceptor
 import io.micronaut.aop.MethodInvocationContext
-import io.micronaut.http.client.exceptions.HttpClientResponseException
 import javax.inject.Singleton
 
 @Singleton

@@ -1,7 +1,7 @@
-package br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb
+package br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb.criarPix
 
-import br.com.zupacademy.bruno.criarPix.ChavePix
-import br.com.zupacademy.bruno.criarPix.ContaItau
+import br.com.zupacademy.bruno.criarPix.entidades.ChavePix
+import br.com.zupacademy.bruno.criarPix.entidades.ContaItau
 
 class BcbCriarPixResponse(
     val keyType: String,
@@ -10,9 +10,9 @@ class BcbCriarPixResponse(
     val owner: OwnerResponse,
     val createdAt: String
 ) {
-    fun toModel(): ChavePix {
+    fun toModel(idConta: String): ChavePix {
 
-        val contaItau: ContaItau = ContaItau(nome = owner.name, cpf = owner.taxIdNumber, instituicaoId = bankAccount.participant, agencia = bankAccount.branch, numeroConta = bankAccount.accountNumber)
+        val contaItau: ContaItau = ContaItau(nome = owner.name, cpf = owner.taxIdNumber, instituicaoId = bankAccount.participant, agencia = bankAccount.branch, numeroConta = bankAccount.accountNumber, idConta = idConta)
 
         return ChavePix(tipoDaChave = keyType, chave = key, conta = contaItau, tipoDaConta = bankAccount.accountType)
     }

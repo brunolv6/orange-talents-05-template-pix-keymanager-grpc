@@ -1,4 +1,4 @@
-package br.com.zupacademy.bruno.criarPix
+package br.com.zupacademy.bruno.criarPix.entidades
 
 import javax.persistence.Embeddable
 
@@ -8,5 +8,6 @@ class ContaItau(
     val cpf: String,
     val instituicaoId: String,
     val agencia: String,
-    val numeroConta: String
+    val numeroConta: String,
+    val idConta: String
 )

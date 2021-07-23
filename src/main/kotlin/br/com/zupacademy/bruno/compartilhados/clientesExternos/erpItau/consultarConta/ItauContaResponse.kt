@@ -1,5 +1,8 @@
 package br.com.zupacademy.bruno.compartilhados.clientesExternos
 
+import br.com.zupacademy.bruno.criarPix.RequestChavePixExterna
+import br.com.zupacademy.bruno.criarPix.enums.TipoDeConta
+
 
 data class ItauContaResponse(
     val tipo: String,
@@ -8,6 +11,14 @@ data class ItauContaResponse(
     val numero: String,
     val titular: Titular
 ) {
+    fun toModel(request: RequestChavePixExterna): BcbCriarPixRequest {
+
+        val contaBanco = BankAccount(this, TipoDeConta.valueOf(tipo).toModeltoBcb())
+
+        val dono = Owner(this)
+
+        return BcbCriarPixRequest(this, request, contaBanco, dono)
+    }
 
 }
 

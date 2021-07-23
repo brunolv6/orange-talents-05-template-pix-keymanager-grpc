@@ -1,6 +1,6 @@
-package br.com.zupacademy.bruno.criarPix
+package br.com.zupacademy.bruno.criarPix.entidades
 
-import br.com.zupacademy.bruno.criarPix.ContaItau
+import br.com.zupacademy.bruno.criarPix.entidades.ContaItau
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Entity

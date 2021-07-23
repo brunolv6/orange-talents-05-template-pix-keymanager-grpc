@@ -1,4 +1,4 @@
-package br.com.zupacademy.bruno.compartilhados.validadores
+package br.com.zupacademy.bruno.compartilhados.clientesExternos.erpItau.errorHandler
 
 import io.micronaut.aop.Around
 
@@ -6,4 +6,4 @@ import io.micronaut.aop.Around
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FIELD, AnnotationTarget.TYPE)
 @Around
-annotation class ChavePixValida
+annotation class ErrorHandlerErpItauClient
