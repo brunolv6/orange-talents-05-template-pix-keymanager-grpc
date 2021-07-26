@@ -17,16 +17,42 @@ class BcbCriarPixResponse(
         return ChavePix(tipoDaChave = keyType, chave = key, conta = contaItau, tipoDaConta = bankAccount.accountType)
     }
 
-    data class BankAccountResponse(
-        val participant: String,
-        val branch: String,
-        val accountNumber: String,
-        val accountType: String
-    )
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    data class OwnerResponse(
-        val type: String,
-        val name: String,
-        val taxIdNumber: String
-    )
+        other as BcbCriarPixResponse
+
+        if (keyType != other.keyType) return false
+        if (key != other.key) return false
+        if (bankAccount != other.bankAccount) return false
+        if (owner != other.owner) return false
+        if (createdAt != other.createdAt) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = keyType.hashCode()
+        result = 31 * result + key.hashCode()
+        result = 31 * result + bankAccount.hashCode()
+        result = 31 * result + owner.hashCode()
+        result = 31 * result + createdAt.hashCode()
+        return result
+    }
+
+
 }
+
+data class BankAccountResponse(
+    val participant: String,
+    val branch: String,
+    val accountNumber: String,
+    val accountType: String
+)
+
+data class OwnerResponse(
+    val type: String,
+    val name: String,
+    val taxIdNumber: String
+)

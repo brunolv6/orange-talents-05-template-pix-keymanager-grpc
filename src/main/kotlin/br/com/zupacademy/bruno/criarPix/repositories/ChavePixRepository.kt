@@ -8,6 +8,8 @@ import io.micronaut.data.jpa.repository.JpaRepository
 @Repository
 interface ChavePixRepository: JpaRepository<ChavePix, Long> {
 
-    @Query("SELECT Count(*) FROM Chave_Pix cp WHERE cp.chave = :chave AND cp.id_conta = :idconta", nativeQuery = true)
-    fun existeChaveEIdConta(chave: String, idconta: String): Int
+//    @Query("SELECT Count(*) FROM Chave_Pix cp WHERE cp.chave = :chave AND cp.id_conta = :idconta", nativeQuery = true)
+//    fun existeChaveEIdConta(chave: String, idconta: String): Int
+
+    fun existsByChave(chave: String?): Boolean
 }

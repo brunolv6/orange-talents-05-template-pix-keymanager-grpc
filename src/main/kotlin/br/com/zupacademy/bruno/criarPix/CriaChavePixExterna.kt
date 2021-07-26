@@ -2,6 +2,7 @@ package br.com.zupacademy.bruno.criarPix
 
 import br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb.BcbClient
 import br.com.zupacademy.bruno.compartilhados.clientesExternos.erpItau.ERPItauClient
+import br.com.zupacademy.bruno.compartilhados.erros.exceptions.AlreadyExistsErrorException
 import br.com.zupacademy.bruno.compartilhados.erros.exceptions.BadRequestErrorException
 import br.com.zupacademy.bruno.criarPix.entidades.ChavePix
 import org.slf4j.LoggerFactory
@@ -23,7 +24,7 @@ class CriaChavePixExterna(
 
         val bcbCriarPixRequest = contaItauResponse.toModel(request)
 
-        val chavePixBcbReponse = bcbClient.criarChavePix(bcbCriarPixRequest).body()
+        val chavePixBcbReponse = bcbClient.criarChavePix(bcbCriarPixRequest).body() ?: throw AlreadyExistsErrorException("Chave Pix já existe no BCB")
 
         logger.info("Chave PIX salva com sucesso no BCB")
 

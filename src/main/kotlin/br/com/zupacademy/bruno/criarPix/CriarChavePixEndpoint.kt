@@ -56,14 +56,14 @@ open class CriarChavePixEndpoint(
 
         if(!tipoDeChave.valida(request.chave)) throw InconsistenciaTipoChaveEChaveException("Apresentou erros de validacao")
 
-        if(chavePixRepository.existeChaveEIdConta(request.chave, request.idCliente) > 0) throw AlreadyExistsErrorException("Relacao chave pix e cliente já existente")
+        if(chavePixRepository.existsByChave(request.chave)) throw AlreadyExistsErrorException("Relacao chave pix e cliente já existente")
 
         logger.info("Tipo de chave e chave pix são validas segundo sistema interno")
 
         val requestChavePix = request.toModel(tipoDeChave)
 
         validador.validate(requestChavePix).run {
-            if(this.isNotEmpty()) throw ConstraintViolationExceptionSpecial("Apresentou erros de validacao", this)
+            if(this.isNotEmpty()) throw ConstraintViolationExceptionSpecial("Apresentou erros de validacao genericos", this)
         }
 
         logger.info("Dados de entrada válidados e transformados para tipo interno")
