@@ -22,6 +22,7 @@ class CriaChavePixExterna(
 
         logger.info("Conta recebida do ERP Itau")
 
+        // registro e exclusao do PIX no BCB já implementei na tarefa numeor 005 e 010, porque achei que era necessaria baseado na arquitura do projeto e requisitos
         val bcbCriarPixRequest = contaItauResponse.toModel(request)
 
         val chavePixBcbReponse = bcbClient.criarChavePix(bcbCriarPixRequest).body() ?: throw AlreadyExistsErrorException("Chave Pix já existe no BCB")
