@@ -1,10 +1,7 @@
 package br.com.zupacademy.bruno.compartilhados.erros
 
 import br.com.zupacademy.bruno.ErrorDetails
-import br.com.zupacademy.bruno.compartilhados.erros.exceptions.AlreadyExistsErrorException
-import br.com.zupacademy.bruno.compartilhados.erros.exceptions.BadRequestErrorException
-import br.com.zupacademy.bruno.compartilhados.erros.exceptions.ConstraintViolationExceptionSpecial
-import br.com.zupacademy.bruno.compartilhados.erros.exceptions.InconsistenciaTipoChaveEChaveException
+import br.com.zupacademy.bruno.compartilhados.erros.exceptions.*
 import com.google.protobuf.Any.*
 import com.google.rpc.Code
 import io.grpc.protobuf.StatusProto
@@ -13,6 +10,7 @@ import io.micronaut.aop.InterceptorBean
 import io.micronaut.aop.MethodInterceptor
 import io.micronaut.aop.MethodInvocationContext
 import javax.inject.Singleton
+import javax.validation.ConstraintViolationException
 
 @Singleton
 @InterceptorBean(ErrorAroundHandler::class)
@@ -49,7 +47,16 @@ class ErrorAroundHandlerInterceptor : MethodInterceptor<Any, Any> {
                     StatusProto.toStatusRuntimeException(statusProto)
                 }
 
+                is NotAuthorizedException -> io.grpc.Status.PERMISSION_DENIED
+                    .withCause(ex)
+                    .withDescription(ex.message).asRuntimeException()
+
+                is NotFoundException -> io.grpc.Status.NOT_FOUND
+                    .withCause(ex)
+                    .withDescription(ex.message).asRuntimeException()
+
                 is ConstraintViolationExceptionSpecial -> {
+
                     val errosDetails = ex.erros.map { e -> pack(
                         ErrorDetails.newBuilder() // any do protobuf
                             .setCode(401).setMessage(e.message).setCampo(e.propertyPath.toString())

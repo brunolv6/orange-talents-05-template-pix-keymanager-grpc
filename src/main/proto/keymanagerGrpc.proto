@@ -42,3 +42,16 @@ message ChavePixServiceRequest {
 message ChavePixServiceResponse {
   string pixId = 1;
 }
+
+service DeletarChavePixService {
+  rpc excluir (DeletarChavePixRequest) returns (DeletarChavePixResponse) {}
+}
+
+message DeletarChavePixRequest {
+  string pixId = 1;
+  string clienteId = 2;
+}
+
+message DeletarChavePixResponse{
+  bool removido = 1;
+}

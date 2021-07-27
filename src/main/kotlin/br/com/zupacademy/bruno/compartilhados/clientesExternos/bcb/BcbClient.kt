@@ -16,4 +16,14 @@ interface BcbClient {
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_XML)
     fun criarChavePix(@Body bcbCriarPixRequest: BcbCriarPixRequest): HttpResponse<BcbCriarPixResponse>
+
+    @Get("/api/v1/pix/keys/{key}")
+    @Produces(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_XML)
+    fun buscarChavePix(@PathVariable(name = "key") key: String): HttpResponse<BcbCriarPixResponse>
+
+    @Delete("/api/v1/pix/keys/{key}")
+    @Produces(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_XML)
+    fun deletarChavePix(@PathVariable(name = "key") key: String, @Body keyBody: BcbDeleteRequest): HttpResponse<Any?>
 }

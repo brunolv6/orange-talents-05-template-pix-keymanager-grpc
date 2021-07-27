@@ -6,7 +6,7 @@ import br.com.zupacademy.bruno.utils.itauContaResponseFake
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-internal class BcbCriarPixResponseTest{
+internal class BcbPixResponseTest{
 
     @Test
     internal fun `objetos BcbCriarPixResponse quando se tratar do mesmo devem ser gerar mesmo hashcode e ser iguais na comparacao`() {

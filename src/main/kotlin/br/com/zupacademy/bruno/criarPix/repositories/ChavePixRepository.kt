@@ -4,6 +4,7 @@ import br.com.zupacademy.bruno.criarPix.entidades.ChavePix
 import io.micronaut.data.annotation.Query
 import io.micronaut.data.annotation.Repository
 import io.micronaut.data.jpa.repository.JpaRepository
+import java.util.*
 
 @Repository
 interface ChavePixRepository: JpaRepository<ChavePix, Long> {
@@ -12,4 +13,6 @@ interface ChavePixRepository: JpaRepository<ChavePix, Long> {
 //    fun existeChaveEIdConta(chave: String, idconta: String): Int
 
     fun existsByChave(chave: String?): Boolean
+
+    fun findByIdPix(pixId: Long?): Optional<ChavePix>
 }
