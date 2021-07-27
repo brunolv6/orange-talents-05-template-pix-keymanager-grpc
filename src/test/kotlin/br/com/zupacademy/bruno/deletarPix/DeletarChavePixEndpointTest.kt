@@ -31,6 +31,7 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import javax.inject.Inject
 
+// teste de  registro e exclusao do PIX no BCB já implementei na tarefa numeor 006 e 011, porque achei que era necessaria baseado na arquitura do projeto e requisitos
 @MicronautTest(
     rollback = false,
     transactionMode = TransactionMode.SINGLE_TRANSACTION,
