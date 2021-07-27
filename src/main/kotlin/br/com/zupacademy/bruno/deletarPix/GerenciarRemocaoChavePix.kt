@@ -36,20 +36,21 @@ class GerenciarRemocaoChavePix(
 
         // buscar chave no bcb
         val bcbBuscaResponse = bcbClient.buscarChavePix(chavePix.chave)
-        if (bcbBuscaResponse.status != HttpStatus.OK) throw NotFoundException("Chave ${chavePix.chave} nao encontrada no BCB")
-        logger.info("Chave ${chavePix.chave} encontrada no sistema externo BCB")
-
-        // se encontrada -> Deletar chav pix do BCB
-        val bcbDeleteRequest = BcbDeleteRequest(chavePix.chave)
-        val bcbDeletaResponse = bcbClient.deletarChavePix(chavePix.chave, bcbDeleteRequest)
-
-        when(bcbBuscaResponse.status) {
-            HttpStatus.OK,
-            HttpStatus.NOT_FOUND -> logger.info("Chave Pix ${chavePix.chave} de id ${request.pixId} foi deletada no sistema externo BCB")
-
-            HttpStatus.UNAUTHORIZED -> throw NotAuthorizedException("Nao autorizado exclusão em sitema externo")
-
-            else -> throw BadRequestErrorException("Erro inesperado em sistema externo do BCB")
+        when (bcbBuscaResponse.status){
+            HttpStatus.OK -> {
+                logger.info("Chave ${chavePix.chave} encontrada no sistema externo BCB")
+                val bcbDeleteRequest = BcbDeleteRequest(chavePix.chave)
+                val bcbDeletaResponse = bcbClient.deletarChavePix(chavePix.chave, bcbDeleteRequest)
+                logger.info("Status ${bcbBuscaResponse.status} e ${bcbBuscaResponse.status.name} e ${bcbBuscaResponse.status.code}")
+                when(bcbDeletaResponse.status) {
+                    HttpStatus.OK,
+                    HttpStatus.NOT_FOUND -> logger.info("Chave Pix ${chavePix.chave} de id ${request.pixId} foi deletada no sistema externo BCB")
+                    HttpStatus.UNAUTHORIZED -> throw NotAuthorizedException("Nao autorizado exclusão em sitema externo")
+                    else -> throw BadRequestErrorException("Erro inesperado em sistema externo do BCB no momento de deletar a chave pix")
+                }
+            }
+            HttpStatus.NOT_FOUND -> logger.info("Chave ${chavePix.chave}já nao existe no sistema externo BCB")
+            else -> throw BadRequestErrorException("Erro inesperado em sistema externo do BCB no momento de buscar a chave pix")
         }
 
         chavePixRepository.delete(chavePix)

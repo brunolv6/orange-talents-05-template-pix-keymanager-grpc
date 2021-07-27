@@ -10,7 +10,6 @@ import io.micronaut.aop.InterceptorBean
 import io.micronaut.aop.MethodInterceptor
 import io.micronaut.aop.MethodInvocationContext
 import javax.inject.Singleton
-import javax.validation.ConstraintViolationException
 
 @Singleton
 @InterceptorBean(ErrorAroundHandler::class)
