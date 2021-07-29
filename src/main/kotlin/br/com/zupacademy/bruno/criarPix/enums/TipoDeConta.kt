@@ -12,4 +12,5 @@ enum class TipoDeConta {
         }
     };
     abstract fun toModeltoBcb(): String
+
 }

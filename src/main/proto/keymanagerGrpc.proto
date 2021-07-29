@@ -6,6 +6,7 @@ option java_outer_classname = "KeymanagerGrpc";
 option objc_class_prefix = "HLW";
 
 import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
 
 package br.com.zupacademy.bruno;
 
@@ -54,4 +55,38 @@ message DeletarChavePixRequest {
 
 message DeletarChavePixResponse{
   bool removido = 1;
+}
+
+service ConsultarChavePixService {
+  rpc consultar(ConsultarChavePixRequest) returns (ConsultarChavePixReponse) {}
+}
+
+message ConsultarChavePixRequest{
+  message SistemaInterno {
+    string pixId = 1;
+    string clientId = 2;
+  }
+
+  oneof tipoConsulta {
+    SistemaInterno sistemaInterno = 1;
+    string valorChave = 2;
+  }
+}
+
+message ConsultarChavePixReponse {
+  message Conta {
+    string nomeInstituicao = 1;
+    string agencia = 2;
+    string numeroConta = 3;
+    TipoConta tipoConta = 4;
+  }
+
+  string pixId = 1;
+  string clienteId = 2;
+  TipoChave tipoChave = 3;
+  string chave = 4;
+  string nomeTitular = 5;
+  string cpf = 6;
+  Conta conta = 7;
+  google.protobuf.Timestamp dataCriacao = 8;
 }
