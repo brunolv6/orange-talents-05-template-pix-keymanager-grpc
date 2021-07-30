@@ -1,5 +1,6 @@
 package br.com.zupacademy.bruno.criarPix.enums
 
+import br.com.zupacademy.bruno.compartilhados.erros.exceptions.BadRequestErrorException
 import java.util.*
 
 
@@ -12,6 +13,7 @@ enum class TipoDeChave {
         override fun toModeltoBcb(): String {
             return "RANDOM"
         }
+
         override fun seAleatorio(chave: String): String {
             return UUID.randomUUID().toString()
         }
@@ -58,6 +60,7 @@ enum class TipoDeChave {
     abstract fun seAleatorio(chave: String): String
 
     abstract fun toModeltoBcb(): String
+
 
 //    fun criar(tipo: String): TipoDeChave {
 //        val tipoDeChave: TipoDeChave = this.valueOf(tipo)

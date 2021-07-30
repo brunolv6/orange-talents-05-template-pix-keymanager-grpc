@@ -90,3 +90,24 @@ message ConsultarChavePixReponse {
   Conta conta = 7;
   google.protobuf.Timestamp dataCriacao = 8;
 }
+
+service ListarChavePixService {
+  rpc listar(ListarChavePixRequest) returns (ListarChavePixResponse) {}
+}
+
+message ListarChavePixRequest{
+  string clientId = 1;
+}
+
+message ListarChavePixResponse{
+
+  message ChavePix{
+    string pixId = 1;
+    TipoChave tipoChave = 2;
+    string chave = 3;
+    TipoConta tipoConta = 4;
+    google.protobuf.Timestamp dataCriacao = 5;
+  }
+  string clienteId = 1;
+  repeated ChavePix chavePix = 2;
+}
