@@ -8,6 +8,7 @@ import br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb.BcbDeleteRequ
 import br.com.zupacademy.bruno.criarPix.entidades.ChavePix
 import br.com.zupacademy.bruno.criarPix.entidades.ContaItau
 import br.com.zupacademy.bruno.criarPix.repositories.ChavePixRepository
+import br.com.zupacademy.bruno.utils.addChavePixRepository
 import io.grpc.ManagedChannel
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
@@ -100,7 +101,7 @@ internal class DeletarChavePixEndpointTest(
     internal fun `nao deve deletar chave por nao ter autorizacao`() {
 
         // contexto
-        val chavePixExistente = addChavePixRepository()
+        val chavePixExistente = addChavePixRepository(repository)
 
         val request = DeletarChavePixRequest.newBuilder()
             .setClienteId("c56dfef4-7901-44fb-84e2-a2cefb157890")
@@ -123,7 +124,7 @@ internal class DeletarChavePixEndpointTest(
     @Test
     internal fun `nao deve deletar a chave pix por ocorrer um erro inesperado no sistema externo do bcb no momento de buscar`() {
         // contexto
-        val chavePixExistente = addChavePixRepository()
+        val chavePixExistente = addChavePixRepository(repository)
 
         val request = DeletarChavePixRequest.newBuilder()
             .setClienteId(chavePixExistente.conta.idConta)
@@ -148,7 +149,7 @@ internal class DeletarChavePixEndpointTest(
     @Test
     internal fun `deve deletar a chave pix quando nao a encontrar no bcb`() {
         // contexto
-        val chavePixExistente = addChavePixRepository()
+        val chavePixExistente = addChavePixRepository(repository)
 
         assertEquals(1, repository.count())
 
@@ -172,7 +173,7 @@ internal class DeletarChavePixEndpointTest(
     @Test
     internal fun `nao deve deletar a chave pix por ocorrer um erro inesperado no sistema externo do bcb no momento de deletar`() {
         // contexto
-        val chavePixExistente = addChavePixRepository()
+        val chavePixExistente = addChavePixRepository(repository)
 
         val request = DeletarChavePixRequest.newBuilder()
             .setClienteId(chavePixExistente.conta.idConta)
@@ -203,7 +204,7 @@ internal class DeletarChavePixEndpointTest(
     @Test
     internal fun `nao deve deletar a chave pix por falta de autorizacao da instituicao no sistema externo do bcb no momento de deletar`() {
         // contexto
-        val chavePixExistente = addChavePixRepository()
+        val chavePixExistente = addChavePixRepository(repository)
 
         val request = DeletarChavePixRequest.newBuilder()
             .setClienteId(chavePixExistente.conta.idConta)
@@ -233,7 +234,7 @@ internal class DeletarChavePixEndpointTest(
     @Test
     internal fun `deve deletar a chave pix quando nao a encontrar no bcb no momento de deletar`() {
         // contexto
-        val chavePixExistente = addChavePixRepository()
+        val chavePixExistente = addChavePixRepository(repository)
 
         assertEquals(1, repository.count())
 
@@ -263,7 +264,7 @@ internal class DeletarChavePixEndpointTest(
     @Test
     internal fun `deve deletar a chave pix quando a deleetar no sistema externo BCB`() {
         // contexto
-        val chavePixExistente = addChavePixRepository()
+        val chavePixExistente = addChavePixRepository(repository)
 
         assertEquals(1, repository.count())
 
@@ -288,27 +289,6 @@ internal class DeletarChavePixEndpointTest(
             assertEquals(0, repository.count())
             assertEquals(true, removido)
         }
-    }
-
-
-    fun addChavePixRepository(): ChavePix {
-        val chavePixInicial = ChavePix(
-            tipoDaChave = "CPF",
-            chave = "24876431701",
-            conta = ContaItau(
-                nome = "Cassio Almeida",
-                cpf = "31643468081",
-                instituicaoId = "60701190",
-                agencia = "0001",
-                numeroConta = "084329",
-                idConta = "de95a228-1f27-4ad2-907e-e5a2d816e9bc"
-            ),
-            tipoDaConta = "CONTA_CORRENTE"
-        )
-
-        repository.save(chavePixInicial)
-
-        return chavePixInicial
     }
 
     @MockBean(BcbClient::class)

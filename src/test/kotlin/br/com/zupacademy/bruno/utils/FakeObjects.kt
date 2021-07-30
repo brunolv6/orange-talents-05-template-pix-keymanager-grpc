@@ -7,8 +7,11 @@ import br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb.criarPix.Bank
 import br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb.criarPix.BcbCriarPixResponse
 import br.com.zupacademy.bruno.compartilhados.clientesExternos.bcb.criarPix.OwnerResponse
 import br.com.zupacademy.bruno.criarPix.RequestChavePixExterna
+import br.com.zupacademy.bruno.criarPix.entidades.ChavePix
+import br.com.zupacademy.bruno.criarPix.entidades.ContaItau
 import br.com.zupacademy.bruno.criarPix.enums.TipoDeChave
 import br.com.zupacademy.bruno.criarPix.enums.TipoDeConta
+import br.com.zupacademy.bruno.criarPix.repositories.ChavePixRepository
 
 public fun itauContaResponseFake(): ItauContaResponse {
     return ItauContaResponse(
@@ -41,8 +44,8 @@ public fun bcbCriarPixRequestFake(itauContaResponse: ItauContaResponse): BcbCria
 
 public fun bcbCriarPixResponseFake(): BcbCriarPixResponse {
     return BcbCriarPixResponse(
-        keyType = "PHONE",
-        key = "+5511964044444",
+        keyType = "CPF",
+        key = "02467781054",
         bankAccount = BankAccountResponse(
             participant = "60701190",
             branch = "0001",
@@ -56,4 +59,24 @@ public fun bcbCriarPixResponseFake(): BcbCriarPixResponse {
         ),
         createdAt = "2021-07-21T20:25:15.073291"
     )
+}
+
+public fun addChavePixRepository(repository: ChavePixRepository): ChavePix {
+    val chavePixInicial = ChavePix(
+        tipoDaChave = "CPF",
+        chave = "24876431701",
+        conta = ContaItau(
+            nome = "Cassio Almeida",
+            cpf = "31643468081",
+            instituicaoId = "60701190",
+            agencia = "0001",
+            numeroConta = "084329",
+            idConta = "de95a228-1f27-4ad2-907e-e5a2d816e9bc"
+        ),
+        tipoDaConta = "CONTA_CORRENTE"
+    )
+
+    repository.save(chavePixInicial)
+
+    return chavePixInicial
 }

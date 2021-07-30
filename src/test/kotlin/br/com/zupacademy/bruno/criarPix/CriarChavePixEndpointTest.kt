@@ -91,7 +91,7 @@ internal class CriarChavePixEndpointTest(
         // validacoes
         with(response){
             Assertions.assertEquals(1, repository.count())
-            Assertions.assertTrue(repository.existsByChave("+5511964044444"))
+            Assertions.assertTrue(repository.existsByChave("02467781054"))
             Assertions.assertNotNull(pixId)
         }
 
